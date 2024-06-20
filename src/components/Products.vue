@@ -71,7 +71,9 @@
                         <td>{{ product.Code }}</td>
                         <td>{{ product.Nama }}</td>
                         <td>{{ product.Jumlah }}</td>
-                        <td></td>
+                        <td>
+                            <router-link :to="{name: 'product-detail', params:{code: product.Code}}" class="btn btn-warning">Edit</router-link>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -84,7 +86,7 @@
     import axios from 'axios';
 
     export default {
-        name: "CreateProduct",
+        name: "Product",
         data(){
             return{
                 products: null,

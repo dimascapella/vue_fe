@@ -1,5 +1,4 @@
 <script setup>
-import Products from "./components/Products.vue";
 </script>
 
 <template>
@@ -9,7 +8,7 @@ import Products from "./components/Products.vue";
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-              <Products />
+              <router-view></router-view>
             </div>
           </div>
         </div>
