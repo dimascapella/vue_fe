@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-md-6">
             <h3 class="text-center mb-4">Add Products</h3>
+            <div v-if="message_create_product" class="text-danger my-3"> 
+                {{ message_create_product }} 
+            </div>
             <form @submit.prevent="createProduct">
                 <div class="form-group">
                     <label for="code">Code:</label>
@@ -28,6 +31,9 @@
         </div>
         <div class="col-md-6">
             <h3 class="text-center mb-4">Add History Product</h3>
+            <div v-if="message_create_note" class="my-3"> 
+                {{ message_create_note }} 
+            </div>
             <form @submit.prevent="createNote" class="d-flex flex-column">
                 <div class="form-group">
                     <label for="code">Product Code</label>
@@ -62,7 +68,7 @@
                         <th scope="col">Code</th>
                         <th scope="col">Name</th>
                         <th scope="col">Qty</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" style="width:15%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,8 +77,9 @@
                         <td>{{ product.Code }}</td>
                         <td>{{ product.Nama }}</td>
                         <td>{{ product.Jumlah }}</td>
-                        <td>
-                            <router-link :to="{name: 'product-detail', params:{code: product.Code}}" class="btn btn-warning">Edit</router-link>
+                        <td class="d-flex justify-content-between">
+                            <router-link :to="{name: 'product-detail', params:{code: product.Code}}" class="btn btn-outline-secondary">Detail</router-link>
+                            <button class="btn btn-danger" v-on:click="deleteProduct(product.Code)">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -91,6 +98,8 @@
             return{
                 products: null,
                 message: null,
+                message_create_product: null,
+                message_create_note: null,
                 postData: {
                     code: '',
                     name: '',
@@ -116,8 +125,11 @@
                 axios
                     .post(import.meta.env.VITE_BASE_URL + '/products', formData)
                     .then((response) => {
-                        this.message = response.data.message
-                        console.log(response.data.message)
+                        if(response.data.status == 'failed'){
+                            this.message_create_product = response.data.message
+                        }else{
+                            this.message_create_product = null
+                        }
                         this.getProducts()
                     })
             },
@@ -134,10 +146,22 @@
                 axios
                     .post(import.meta.env.VITE_BASE_URL + '/post/note', postNoteData)
                     .then((response) => {
-                        this.message = response.data.message
+                        this.message_create_note = response.data.message
                         console.log(response.data.message)
                         this.getProducts()
                     })
+            },
+            deleteProduct(code){
+                axios
+                .delete(import.meta.env.VITE_BASE_URL + `/products/` + code)
+                .then((response) => {
+                    if(response.data.status == 'failed'){
+                            this.message = response.data.message
+                        }else{
+                            this.message = null
+                        }
+                    this.getProducts()
+                })
             }
         },
         mounted () {

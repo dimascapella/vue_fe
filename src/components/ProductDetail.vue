@@ -16,7 +16,14 @@
                 <dt>Description</dt>
                 <dd>{{ description }}</dd>
             </dl>
-            <a href="#" class="text-danger" v-on:click="deleteProduct()">Delete</a>
+            <div class="row">
+                <div class="col-md-1">
+                    <router-link :to="`/product/${code}/edit`" class="text-primary">Edit</router-link>
+                </div>
+                <div class="col-md-1">
+                    <a href="#" class="text-danger" v-on:click="deleteProduct()">Delete</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card mt-4">
