@@ -42,7 +42,7 @@
                 <tbody>
                     <tr v-for="(note, index) in notes" :key="index">
                         <td>{{ index + 1 }}</td>
-                        <td>{{ name }} - {{ code }}</td>
+                        <td>{{ code }} - {{ name }}</td>
                         <td>{{ note.Note }}</td>
                         <td>{{ note.Qty }}</td>
                     </tr>

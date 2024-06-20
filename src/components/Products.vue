@@ -6,10 +6,10 @@
                 {{ message_create_product }} 
             </div>
             <form @submit.prevent="createProduct">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="code">Code:</label>
                     <input class="form-control" type="text" id="code" v-model="postData.code">
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="name">Name: </label>
                     <input class="form-control" type="text" id="name" v-model="postData.name">
@@ -101,7 +101,7 @@
                 message_create_product: null,
                 message_create_note: null,
                 postData: {
-                    code: '',
+                    // code: '',
                     name: '',
                     qty: 0,
                     description: '',
@@ -117,7 +117,7 @@
         methods: {
             createProduct(){
                 let formData = new FormData()
-                formData.append('code', this.postData.code)
+                // formData.append('code', this.postData.code)
                 formData.append('name', this.postData.name)
                 formData.append('qty', this.postData.qty)
                 formData.append('description', this.postData.description)
@@ -129,6 +129,11 @@
                             this.message_create_product = response.data.message
                         }else{
                             this.message_create_product = null
+                            // this.postData.code = ''
+                            this.postData.name = ''
+                            this.postData.qty = 0
+                            this.postData.description = ''
+                            this.postData.status = false
                         }
                         this.getProducts()
                     })
