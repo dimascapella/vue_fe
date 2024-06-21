@@ -73,9 +73,12 @@
                 axios
                     .put(import.meta.env.VITE_BASE_URL + `/products/${this.route.params.code}`, formData)
                     .then((response) => {
-                        this.message = response.data.message
-                        console.log(this.message)
-                        this.$router.push({ name: 'product-detail', params: {code: this.code} })
+                        if(response.data.status == 'failed'){
+                            this.message = response.data.message
+                            console.log(this.message)
+                        }else{
+                            this.$router.push({ name: 'product-detail', params: {code: this.code} })
+                        }
                     })
             }
         },
